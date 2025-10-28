@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.aliayali.internet.presentation.screens.home.HomeScreen
 import com.aliayali.internet.presentation.screens.splash.SplashScreen
 
 @Composable
@@ -24,7 +25,13 @@ fun SetupNavigation(
         composable(
             route = NavigationScreen.Splash.route
         ) {
-            SplashScreen()
+            SplashScreen(navController)
+        }
+
+        composable(
+            route = NavigationScreen.Home.route
+        ) {
+            HomeScreen(navController)
         }
 
     }

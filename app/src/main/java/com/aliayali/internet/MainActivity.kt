@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.aliayali.internet.navigation.SetupNavigation
 import com.aliayali.internet.ui.theme.InternetTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +21,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             InternetTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
                     SetupNavigation(
                         innerPadding,
                         navController
