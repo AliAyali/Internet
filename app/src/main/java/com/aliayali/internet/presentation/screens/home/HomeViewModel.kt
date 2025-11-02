@@ -1,7 +1,6 @@
 package com.aliayali.internet.presentation.screens.home
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aliayali.internet.core.ConnectionState

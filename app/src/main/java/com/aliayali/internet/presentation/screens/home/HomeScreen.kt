@@ -30,6 +30,7 @@ import com.aliayali.internet.R
 import com.aliayali.internet.core.ConnectionState
 import com.aliayali.internet.core.ConnectionType
 import com.aliayali.internet.presentation.components.Line
+import com.aliayali.internet.presentation.components.SpeedResultRow
 import com.aliayali.internet.ui.theme.Green
 
 @Composable
@@ -145,53 +146,11 @@ fun HomeScreen(
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Ping:",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = if (ping >= 0) "$ping ms" else "0",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+            SpeedResultRow(label = "Ping", value = ping.toInt(), state = connectionState)
             Line()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Download:",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = if (download >= 0) "${download.toInt()} KB/s" else "0 KB/s",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+            SpeedResultRow(label = "Download", value = download.toInt(), state = connectionState)
             Line()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Upload:",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = if (upload >= 0) "${upload.toInt()} KB/s" else "0 KB/s",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+            SpeedResultRow(label = "Upload", value = upload.toInt(), state = connectionState)
         }
 
         Text(
