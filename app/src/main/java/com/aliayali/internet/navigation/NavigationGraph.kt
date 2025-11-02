@@ -31,7 +31,7 @@ fun SetupNavigation(
         composable(
             route = NavigationScreen.Home.route
         ) {
-            HomeScreen(navController)
+            HomeScreen()
         }
 
     }
