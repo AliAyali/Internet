@@ -9,6 +9,7 @@ import com.aliayali.internet.core.NetworkSpeedTester
 import com.aliayali.internet.core.NetworkUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -64,8 +65,9 @@ class HomeViewModel @Inject constructor(
                 _ping.value = pingDeferred.await()
                 _downloadSpeed.value = downloadDeferred.await()
                 _uploadSpeed.value = uploadDeferred.await()
-
                 _connectionState.value = ConnectionState.Connected
+                delay(3000)
+                _connectionState.value = ConnectionState.Idle
             } else {
                 _ping.value = -1
                 _downloadSpeed.value = -1.0
