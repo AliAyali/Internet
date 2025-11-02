@@ -29,6 +29,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.aliayali.internet.R
 import com.aliayali.internet.core.ConnectionState
 import com.aliayali.internet.core.ConnectionType
+import com.aliayali.internet.core.NetworkQualityEvaluator
 import com.aliayali.internet.presentation.components.Line
 import com.aliayali.internet.presentation.components.SpeedResultRow
 import com.aliayali.internet.ui.theme.Green
@@ -153,9 +154,15 @@ fun HomeScreen(
             SpeedResultRow(label = "Upload", value = upload.toInt(), state = connectionState)
         }
 
+        val quality = NetworkQualityEvaluator.evaluate(
+            connectionState = connectionState,
+            ping = ping,
+            download = download
+        )
+
         Text(
-            text = "Status -> ...",
-            color = MaterialTheme.colorScheme.onBackground,
+            text = quality.statusText,
+            color = quality.statusColor,
             style = MaterialTheme.typography.bodyLarge
         )
     }
