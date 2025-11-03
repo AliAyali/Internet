@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor() : ViewModel() {
-    private val _isDelayFinished = MutableStateFlow<Boolean>(false)
+    private val _isDelayFinished = MutableStateFlow(false)
     val isDelayFinished: StateFlow<Boolean> = _isDelayFinished
 
     init {

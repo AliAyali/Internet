@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aliayali.internet.core.ConnectionState
-import com.aliayali.internet.core.ConnectionType
 import com.aliayali.internet.core.NetworkSpeedTester
 import com.aliayali.internet.core.NetworkUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
