@@ -65,5 +65,5 @@
 
 ### 2️⃣ Clone the repo
 ```bash
-git clone https://github.com/<your-username>/InternetSpeedAnalyzer.git
+git clone https://github.com/AliAyali/Internet.git
 cd InternetSpeedAnalyzer
