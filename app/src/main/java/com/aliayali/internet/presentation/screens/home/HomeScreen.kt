@@ -149,11 +149,26 @@ fun HomeScreen(
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            SpeedResultRow(label = "Ping", value = ping.toInt(), state = connectionState)
+            SpeedResultRow(
+                label = "Ping",
+                value = ping.toInt(),
+                unit = "ms",
+                state = connectionState
+            )
             Line()
-            SpeedResultRow(label = "Download", value = download.toInt(), state = connectionState)
+            SpeedResultRow(
+                label = "Download",
+                value = download.toInt(),
+                unit = "KB/s",
+                state = connectionState
+            )
             Line()
-            SpeedResultRow(label = "Upload", value = upload.toInt(), state = connectionState)
+            SpeedResultRow(
+                label = "Upload",
+                value = upload.toInt(),
+                unit = "KB/s",
+                state = connectionState
+            )
         }
 
         val quality = NetworkQualityEvaluator.evaluate(

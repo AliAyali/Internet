@@ -3,8 +3,10 @@ package com.aliayali.internet.presentation.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import com.aliayali.internet.core.ConnectionState
 fun SpeedResultRow(
     label: String,
     value: Int,
+    unit: String,
     state: ConnectionState,
 ) {
     Row(
@@ -36,12 +39,13 @@ fun SpeedResultRow(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CircularProgressIndicator(
-                        Modifier.size(20.dp),
+                        modifier = Modifier.size(20.dp),
                         strokeWidth = 2.dp,
                         color = MaterialTheme.colorScheme.onBackground
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = " KB/s",
+                        text = unit,
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.bodyLarge
                     )
@@ -54,29 +58,28 @@ fun SpeedResultRow(
                     enter = androidx.compose.animation.fadeIn(),
                 ) {
                     Text(
-                        text = if (value >= 0) "$value KB/s" else "0 KB/s",
+                        text = if (value >= 0) "$value $unit" else "0 $unit",
                         color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
+            }
+
+            ConnectionState.Disconnected -> {
+                Text(
+                    text = "0 $unit",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
 
             else -> {
-                if (state == ConnectionState.Disconnected) {
-                    Text(
-                        text = "0 KB/s",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                } else {
-                    Text(
-                        text = if (value >= 0) "$value KB/s" else "...",
-                        color = MaterialTheme.colorScheme.onBackground,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
+                Text(
+                    text = if (value >= 0) "$value $unit" else "...",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
-
         }
     }
 }
