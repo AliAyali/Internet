@@ -25,14 +25,24 @@ class HomeViewModel @Inject constructor(
 
     private val okHttpClient = OkHttpClient()
 
+    /**
+     * Tests internet connection by measuring ping, upload, and download speeds.
+     * Updates [uiState] based on connection results.
+     */
     fun testInternet() {
         viewModelScope.launch {
+
+            // Step 1: Set state to Scanning
             _uiState.value = _uiState.value.copy(connectionState = ConnectionState.Scanning)
 
+            // Step 2: Detect connection type (Wi-Fi, Mobile, Ethernet, etc.)
             val connectionType = NetworkUtils.getConnectionType(appContext)
             _uiState.value = _uiState.value.copy(connectionType = connectionType)
 
+            // Step 3: Run tests if device is connected
             if (NetworkUtils.isConnected(appContext)) {
+
+                // Run tests concurrently
                 val pingDeferred = async { NetworkSpeedTester.measureTcpPing() }
                 val uploadDeferred = async {
                     NetworkSpeedTester.measureUploadOkHttp(
@@ -45,6 +55,7 @@ class HomeViewModel @Inject constructor(
                     NetworkSpeedTester.measureDownloadOkHttp(uploadDeferred.await())
                 }
 
+                // Step 4: Collect results and update UI state
                 _uiState.value = _uiState.value.copy(
                     ping = pingDeferred.await(),
                     downloadSpeed = downloadDeferred.await(),
@@ -52,10 +63,12 @@ class HomeViewModel @Inject constructor(
                     connectionState = ConnectionState.Connected
                 )
 
+                // Step 5: Reset state after a short delay
                 delay(3000)
                 _uiState.value = _uiState.value.copy(connectionState = ConnectionState.Idle)
 
             } else {
+                // No connection: reset all values
                 _uiState.value = _uiState.value.copy(
                     connectionState = ConnectionState.Disconnected,
                     ping = -1,

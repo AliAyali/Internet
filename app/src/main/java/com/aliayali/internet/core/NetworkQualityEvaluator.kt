@@ -2,12 +2,27 @@ package com.aliayali.internet.core
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Utility object responsible for evaluating network quality based on
+ * connection state, ping, and download speed.
+ *
+ * Returns a [NetworkQualityResult] that includes both a descriptive
+ * status message and a corresponding color for UI feedback.
+ */
 object NetworkQualityEvaluator {
 
+    /**
+     * Evaluates the current network quality.
+     *
+     * @param connectionState The current [ConnectionState] of the device.
+     * @param ping The measured ping in milliseconds.
+     * @param download The measured download speed in KB/s.
+     * @return A [NetworkQualityResult] containing the status text and color.
+     */
     fun evaluate(
         connectionState: ConnectionState,
         ping: Long,
-        download: Double
+        download: Double,
     ): NetworkQualityResult {
         return when {
             connectionState == ConnectionState.Disconnected -> NetworkQualityResult(
