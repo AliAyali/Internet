@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
@@ -68,18 +66,20 @@ fun HomeScreen(
         ) {
             Text(
                 text = when (connectionType) {
-                    ConnectionType.WIFI -> "Connect via Wi-Fi"
-                    ConnectionType.MOBILE -> "Connect via Mobile Data"
-                    else -> "No Connection"
+                    ConnectionType.WIFI -> "Connected via Wi-Fi"
+                    ConnectionType.MOBILE -> "Connected via Mobile Data"
+                    ConnectionType.ETHERNET -> "Connected via Ethernet"
+                    ConnectionType.NONE -> "No Connection"
                 },
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyLarge
             )
             Icon(
-                imageVector = when (connectionType) {
-                    ConnectionType.WIFI -> Icons.Default.Warning
-                    ConnectionType.MOBILE -> Icons.Default.Phone
-                    else -> Icons.Default.Warning
+                when (connectionType) {
+                    ConnectionType.WIFI -> painterResource(R.drawable.wifi)
+                    ConnectionType.MOBILE -> painterResource(R.drawable.mobile)
+                    ConnectionType.ETHERNET -> painterResource(R.drawable.ethernet)
+                    ConnectionType.NONE -> painterResource(R.drawable.none)
                 },
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onBackground
