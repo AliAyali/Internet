@@ -66,4 +66,10 @@
 ### 2️⃣ Clone the repo
 ```bash
 git clone https://github.com/AliAyali/Internet.git
-cd InternetSpeedAnalyzer
+```
+
+**Name:** Ali Ayali  
+**GitHub:** [github.com/AliAyali](https://github.com/AliAyali)  
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
