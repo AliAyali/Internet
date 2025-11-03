@@ -36,11 +36,13 @@ import com.aliayali.internet.ui.theme.Green
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val connectionState by homeViewModel.connectionState.collectAsState()
-    val ping by homeViewModel.ping.collectAsState()
-    val download by homeViewModel.downloadSpeed.collectAsState()
-    val upload by homeViewModel.uploadSpeed.collectAsState()
-    val connectionType by homeViewModel.connectionType.collectAsState()
+    val uiState by homeViewModel.uiState.collectAsState()
+
+    val connectionState = uiState.connectionState
+    val connectionType = uiState.connectionType
+    val ping = uiState.ping
+    val download = uiState.downloadSpeed
+    val upload = uiState.uploadSpeed
 
     val compositionIdle by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.loading),

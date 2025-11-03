@@ -12,7 +12,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import javax.inject.Inject
@@ -22,32 +21,20 @@ class HomeViewModel @Inject constructor(
     private val appContext: Application,
 ) : ViewModel() {
 
-    private val _connectionState = MutableStateFlow(ConnectionState.Idle)
-    val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
-
-    private val _ping = MutableStateFlow(-1L)
-    val ping: StateFlow<Long> = _ping
-
-    private val _downloadSpeed = MutableStateFlow(-1.0)
-    val downloadSpeed: StateFlow<Double> = _downloadSpeed
-
-    private val _uploadSpeed = MutableStateFlow(-1.0)
-    val uploadSpeed: StateFlow<Double> = _uploadSpeed
-
-    private val _connectionType = MutableStateFlow(ConnectionType.NONE)
-    val connectionType: StateFlow<ConnectionType> = _connectionType
+    private val _uiState = MutableStateFlow(HomeUiState())
+    val uiState: StateFlow<HomeUiState> = _uiState
 
     private val okHttpClient = OkHttpClient()
 
     fun testInternet() {
         viewModelScope.launch {
-            _connectionState.value = ConnectionState.Scanning
+            _uiState.value = _uiState.value.copy(connectionState = ConnectionState.Scanning)
 
-            _connectionType.value = NetworkUtils.getConnectionType(appContext)
+            val connectionType = NetworkUtils.getConnectionType(appContext)
+            _uiState.value = _uiState.value.copy(connectionType = connectionType)
 
             if (NetworkUtils.isConnected(appContext)) {
                 val pingDeferred = async { NetworkSpeedTester.measureTcpPing() }
-
                 val uploadDeferred = async {
                     NetworkSpeedTester.measureUploadOkHttp(
                         okHttpClient,
@@ -55,24 +42,27 @@ class HomeViewModel @Inject constructor(
                         dataSize = 100 * 1024
                     )
                 }
-
                 val downloadDeferred = async {
-                    NetworkSpeedTester.measureDownloadOkHttp(
-                        uploadDeferred.await(),
-                    )
+                    NetworkSpeedTester.measureDownloadOkHttp(uploadDeferred.await())
                 }
 
-                _ping.value = pingDeferred.await()
-                _downloadSpeed.value = downloadDeferred.await()
-                _uploadSpeed.value = uploadDeferred.await()
-                _connectionState.value = ConnectionState.Connected
+                _uiState.value = _uiState.value.copy(
+                    ping = pingDeferred.await(),
+                    downloadSpeed = downloadDeferred.await(),
+                    uploadSpeed = uploadDeferred.await(),
+                    connectionState = ConnectionState.Connected
+                )
+
                 delay(3000)
-                _connectionState.value = ConnectionState.Idle
+                _uiState.value = _uiState.value.copy(connectionState = ConnectionState.Idle)
+
             } else {
-                _ping.value = -1
-                _downloadSpeed.value = -1.0
-                _uploadSpeed.value = -1.0
-                _connectionState.value = ConnectionState.Disconnected
+                _uiState.value = _uiState.value.copy(
+                    connectionState = ConnectionState.Disconnected,
+                    ping = -1,
+                    downloadSpeed = -1.0,
+                    uploadSpeed = -1.0
+                )
             }
         }
     }
