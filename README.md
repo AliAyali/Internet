@@ -49,9 +49,16 @@
 
 ## 🖼️ App Preview
 
-| Splash | Home (Idle) | Home (Connected) |
-|--------|--------------|------------------|
-| ![Splash](docs/splash.png) | ![Idle](docs/idle.png) | ![Connected](docs/connected.png) |
+<p align="center">
+  <img src="images/1.png" alt="Splash" width="200" style="border-radius: 10px; border: 1px solid #ccc; margin: 6px;"/>
+  <img src="images/2.png" alt="Idle" width="200" style="border-radius: 10px; border: 1px solid #ccc; margin: 6px;"/>
+  <img src="images/3.png" alt="Connected" width="200" style="border-radius: 10px; border: 1px solid #ccc; margin: 6px;"/>
+  <img src="images/4.png" alt="Result" width="200" style="border-radius: 10px; border: 1px solid #ccc; margin: 6px;"/>
+</p>
+
+<p align="center">
+  <b>Splash</b> • <b>Idle</b> • <b>Connected</b> • <b>Result</b>
+</p>
 
 ---
 
